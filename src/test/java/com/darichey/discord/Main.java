@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			client = new ClientBuilder().withToken("MTY4ODcxOTg0MTMyNzg0MTI4.Co_QCw.iB7sXhkCz_fiAcbCqLnHzto4L34").login();
+			client = new ClientBuilder().withToken("this didn't happen").login();
 			CommandRegistry.getRegistryForClient(client).register(new CommandHandler());
 		} catch (DiscordException e) {
 			e.printStackTrace();
