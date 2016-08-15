@@ -2,7 +2,7 @@ package com.darichey.discord.api;
 
 import sx.blah.discord.handle.obj.Permissions;
 
-import java.util.EnumSet;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -33,13 +33,19 @@ public class Command {
 	}
 
 	public static class Options {
-		public String[] aliases = new String[0];
+		public Set<String> aliases = Collections.emptySet();
 		public String description = "";
 		public boolean caseSensitive = false;
 		public boolean deleteCommand = false;
 		public EnumSet<Permissions> requiredPermissions = EnumSet.noneOf(Permissions.class);
 
-		public Options withAliases(String[] aliases) {
+		public Options withAliases(String... aliases) {
+			Set<String> set = new HashSet<>();
+			Collections.addAll(set, aliases);
+			return withAliases(set);
+		}
+
+		public Options withAliases(Set<String> aliases) {
 			this.aliases = aliases;
 			return this;
 		}

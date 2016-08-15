@@ -2,10 +2,7 @@ package com.darichey.discord.api;
 
 import sx.blah.discord.api.IDiscordClient;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CommandRegistry {
 
@@ -30,8 +27,10 @@ public class CommandRegistry {
 		}
 	}
 
-	public Optional<Command> getCommandByName(String name) {
-		return commands.stream().filter(c -> c.name.equalsIgnoreCase(name)).findFirst();
+	public Optional<Command> getCommandByName(String name, boolean includeAlias) {
+		return commands.stream().filter(c ->
+			c.name.equalsIgnoreCase(name) || (includeAlias && c.options.aliases.contains(name))
+		).findFirst();
 	}
 
 	public List<Command> getCommands() {

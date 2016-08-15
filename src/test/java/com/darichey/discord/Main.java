@@ -12,6 +12,9 @@ import sx.blah.discord.util.RateLimitException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
 	static IDiscordClient client;
@@ -22,7 +25,7 @@ public class Main {
 			TOKEN = reader.readLine();
 			client = new ClientBuilder().withToken(TOKEN).login();
 
-			Command test = new Command("ping", new Command.Options())
+			Command test = new Command("ping", new Command.Options().withAliases("testAlias", "testAlias1"))
 					.onExecuted(context ->
 						sendMessage(context.getMessage().getChannel(), "Pong!")
 					)
