@@ -1,11 +1,15 @@
 package com.darichey.discord;
 
+import com.darichey.discord.api.Command;
+import com.darichey.discord.api.CommandRegistry;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.util.DiscordException;
+import sx.blah.discord.util.MissingPermissionsException;
+import sx.blah.discord.util.RateLimitException;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -17,8 +21,26 @@ public class Main {
 		try (BufferedReader reader = new BufferedReader(new FileReader("token.txt"))){
 			TOKEN = reader.readLine();
 			client = new ClientBuilder().withToken(TOKEN).login();
-			CommandRegistry.getRegistryForClient(client).register(new CommandHandler());
+
+			Command test = new Command("ping", new Command.Options())
+					.onExecuted(context ->
+						sendMessage(context.getMessage().getChannel(), "Pong!")
+					)
+					.onFailure((context, reason) -> {
+
+					});
+
+			CommandRegistry.getRegistryForClient(client).register(test);
+
 		} catch (IOException | DiscordException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void sendMessage(IChannel channel, String message) {
+		try {
+			channel.sendMessage(message);
+		} catch (MissingPermissionsException | DiscordException | RateLimitException e) {
 			e.printStackTrace();
 		}
 	}
