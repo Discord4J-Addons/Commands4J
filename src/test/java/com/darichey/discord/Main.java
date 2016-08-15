@@ -25,7 +25,7 @@ public class Main {
 			TOKEN = reader.readLine();
 			client = new ClientBuilder().withToken(TOKEN).login();
 
-			Command test = new Command("ping", new Command.Options().withAliases("testAlias", "testAlias1"))
+			Command test = new Command("ping", new Command.Options().withAliases("testAlias", "testAlias1").deleteCommand(true))
 					.onExecuted(context ->
 						sendMessage(context.getMessage().getChannel(), "Pong!")
 					)
