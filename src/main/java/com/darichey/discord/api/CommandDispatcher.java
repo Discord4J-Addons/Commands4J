@@ -18,6 +18,8 @@ public class CommandDispatcher implements IListener<MessageReceivedEvent> {
 			String commandName = content.substring(1, content.contains(" ") ? content.indexOf(" ")  + 1 : content.length());
 			Optional<Command> command = registry.getCommandByName(commandName, true);
 			if (command.isPresent()) {
+				if (command.get().options.caseSensitive && !commandName.equals(command.get().name)) return; // If it's case sensitive, check if the cases match
+
 				CommandContext context = new CommandContext(event.getMessage());
 
 				EnumSet<Permissions> requiredPermissions = command.get().options.requiredPermissions;
