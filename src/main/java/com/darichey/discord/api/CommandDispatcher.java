@@ -29,22 +29,32 @@ public class CommandDispatcher implements IListener<MessageReceivedEvent> {
 				boolean hasPermission = event.getMessage().getChannel().getModifiedPermissions(event.getMessage().getAuthor()).containsAll(requiredPermissions);
 
 				if (hasPermission) {
-					command.get().onExecuted.accept(context);
-					if (command.get().options.deleteCommand) {
-						RequestBuffer.request(() -> {
-							try {
-								event.getMessage().delete();
-							} catch (MissingPermissionsException e) {
-								command.get().onFailure.accept(context, FailureReason.BOT_MISSING_PERMISSIONS);
-							} catch (DiscordException e) {
-								e.printStackTrace();
-							}
-						});
+					if (command.get().options.handleRateLimits) {
+						RequestBuffer.request(() ->
+							execute(command.get(), context, event)
+						);
+					} else {
+						execute(command.get(), context, event);
 					}
 				} else {
 					command.get().onFailure.accept(context, FailureReason.AUTHOR_MISSING_PERMISSIONS);
 				}
 			}
+		}
+	}
+
+	private void execute(Command command, CommandContext context, MessageReceivedEvent event) {
+		command.onExecuted.accept(context);
+		if (command.options.deleteCommand) {
+			RequestBuffer.request(() -> {
+				try {
+					event.getMessage().delete();
+				} catch (MissingPermissionsException e) {
+					command.onFailure.accept(context, FailureReason.BOT_MISSING_PERMISSIONS);
+				} catch (DiscordException e) {
+					e.printStackTrace();
+				}
+			});
 		}
 	}
 }

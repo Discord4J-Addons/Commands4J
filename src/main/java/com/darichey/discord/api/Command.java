@@ -37,6 +37,7 @@ public class Command {
 		public String description = "";
 		public boolean caseSensitive = false;
 		public boolean deleteCommand = false;
+		public boolean handleRateLimits = true;
 		public EnumSet<Permissions> requiredPermissions = EnumSet.noneOf(Permissions.class);
 
 		public Options withAliases(String... aliases) {
@@ -62,6 +63,11 @@ public class Command {
 
 		public Options deleteCommand(boolean deleteCommand) {
 			this.deleteCommand = deleteCommand;
+			return this;
+		}
+
+		public Options handleRateLimits(boolean handleRateLimits) {
+			this.handleRateLimits = handleRateLimits;
 			return this;
 		}
 
