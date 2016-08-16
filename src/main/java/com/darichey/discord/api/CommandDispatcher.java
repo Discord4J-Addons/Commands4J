@@ -1,7 +1,6 @@
 package com.darichey.discord.api;
 
 import sx.blah.discord.api.events.IListener;
-import sx.blah.discord.api.internal.DiscordUtils;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.DiscordException;
@@ -11,7 +10,7 @@ import sx.blah.discord.util.RequestBuffer;
 import java.util.EnumSet;
 import java.util.Optional;
 
-public class CommandDispatcher implements IListener<MessageReceivedEvent> {
+class CommandDispatcher implements IListener<MessageReceivedEvent> {
 
 	@Override
 	public void handle(MessageReceivedEvent event) {
@@ -27,34 +26,23 @@ public class CommandDispatcher implements IListener<MessageReceivedEvent> {
 
 				EnumSet<Permissions> requiredPermissions = command.get().options.requiredPermissions;
 				boolean hasPermission = event.getMessage().getChannel().getModifiedPermissions(event.getMessage().getAuthor()).containsAll(requiredPermissions);
-
 				if (hasPermission) {
-					if (command.get().options.handleRateLimits) {
-						RequestBuffer.request(() ->
-							execute(command.get(), context, event)
-						);
-					} else {
-						execute(command.get(), context, event);
+					command.get().onExecuted.accept(context);
+					if (command.get().options.deleteCommand) {
+						RequestBuffer.request(() -> {
+							try {
+								event.getMessage().delete();
+							} catch (MissingPermissionsException e) {
+								command.get().onFailure.accept(context, FailureReason.BOT_MISSING_PERMISSIONS);
+							} catch (DiscordException e) {
+								e.printStackTrace();
+							}
+						});
 					}
 				} else {
 					command.get().onFailure.accept(context, FailureReason.AUTHOR_MISSING_PERMISSIONS);
 				}
 			}
-		}
-	}
-
-	private void execute(Command command, CommandContext context, MessageReceivedEvent event) {
-		command.onExecuted.accept(context);
-		if (command.options.deleteCommand) {
-			RequestBuffer.request(() -> {
-				try {
-					event.getMessage().delete();
-				} catch (MissingPermissionsException e) {
-					command.onFailure.accept(context, FailureReason.BOT_MISSING_PERMISSIONS);
-				} catch (DiscordException e) {
-					e.printStackTrace();
-				}
-			});
 		}
 	}
 }
