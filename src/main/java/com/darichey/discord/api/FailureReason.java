@@ -1,5 +1,6 @@
 package com.darichey.discord.api;
 
 public enum FailureReason {
-	MISSING_PERMISSIONS
+	AUTHOR_MISSING_PERMISSIONS,
+	BOT_MISSING_PERMISSIONS
 }

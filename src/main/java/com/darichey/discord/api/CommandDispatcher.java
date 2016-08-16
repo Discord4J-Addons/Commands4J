@@ -26,21 +26,23 @@ public class CommandDispatcher implements IListener<MessageReceivedEvent> {
 				CommandContext context = new CommandContext(event.getMessage());
 
 				EnumSet<Permissions> requiredPermissions = command.get().options.requiredPermissions;
-				boolean canExecute = event.getMessage().getChannel().getModifiedPermissions(event.getMessage().getAuthor()).containsAll(requiredPermissions);
+				boolean hasPermission = event.getMessage().getChannel().getModifiedPermissions(event.getMessage().getAuthor()).containsAll(requiredPermissions);
 
-				if (canExecute) {
+				if (hasPermission) {
 					command.get().onExecuted.accept(context);
 					if (command.get().options.deleteCommand) {
 						RequestBuffer.request(() -> {
 							try {
 								event.getMessage().delete();
-							} catch (DiscordException | MissingPermissionsException e) {
-								e.printStackTrace(); // TODO: MissingPermissions: The user has told us to delete the command message but we don't have permission to do so... what now?
+							} catch (MissingPermissionsException e) {
+								command.get().onFailure.accept(context, FailureReason.BOT_MISSING_PERMISSIONS);
+							} catch (DiscordException e) {
+								e.printStackTrace();
 							}
 						});
 					}
 				} else {
-					command.get().onFailure.accept(context, FailureReason.MISSING_PERMISSIONS);
+					command.get().onFailure.accept(context, FailureReason.AUTHOR_MISSING_PERMISSIONS);
 				}
 			}
 		}
