@@ -19,6 +19,15 @@ public class CommandRegistry {
 	private List<Command> commands = new ArrayList<>();
 	public String prefix = "!";
 
+
+	public void setPrefix(String newPrefix) {
+		prefix = newPrefix;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
 	public void register(Command command) {
 		if (!commands.stream().filter(cmd -> cmd.name.equalsIgnoreCase(command.name)).findFirst().isPresent()) {
 			commands.add(command);
@@ -36,4 +45,5 @@ public class CommandRegistry {
 	public List<Command> getCommands() {
 		return commands;
 	}
+
 }
