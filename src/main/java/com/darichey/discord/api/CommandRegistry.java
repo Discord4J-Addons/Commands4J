@@ -17,14 +17,14 @@ public class CommandRegistry {
 	}
 
 	private List<Command> commands = new ArrayList<>();
-	public String prefix = "!";
+	public static String prefix = "!";
 
 
-	public void setPrefix(String newPrefix) {
+	public static void setPrefix(String newPrefix) {
 		prefix = newPrefix;
 	}
 
-	public String getPrefix() {
+	public static String getPrefix() {
 		return prefix;
 	}
 
