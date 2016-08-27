@@ -18,7 +18,7 @@ public class CommandContext {
 		this.name = message.getContent().substring(1).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
 		//this.args = (message.getContent().substring(message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length())).split("\\s+");
 		List<String> list = new ArrayList<String>();
-		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message.getContent().substring(1).replace(name, ""));
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message.getContent().substring(1).replace(name + " ", ""));
 		while (m.find()) {
 			list.add(m.group(1));
 		}
