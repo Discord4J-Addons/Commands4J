@@ -11,7 +11,7 @@ public class CommandContext {
 	public CommandContext(IMessage message) {
 		this.message = message;
 		this.name = message.getContent().substring(1).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
-		this.args = message.getContent().substring(message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1).split("\\s+");
+		this.args = (message.getContent().substring(message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length())).split("\\s+");
 	}
 
 	public CommandContext(IMessage message, String name, String[] args) {

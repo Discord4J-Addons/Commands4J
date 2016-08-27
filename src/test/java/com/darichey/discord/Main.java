@@ -12,6 +12,7 @@ import sx.blah.discord.util.RateLimitException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
 	static IDiscordClient client;
@@ -24,9 +25,7 @@ public class Main {
 
 			Command test = new Command("ping", new Command.Options().withAliases("testAlias", "testAlias1"))
 					.onExecuted(context -> {
-						for (int i = 0; i < 8; i++) {
-							sendMessage(context.getMessage().getChannel(), "Pong! " + i);
-						}
+						System.out.println(Arrays.toString(context.getArgs()));
 					})
 					.onFailure((context, reason) -> {
 
