@@ -16,13 +16,19 @@ public class CommandContext {
 	public CommandContext(IMessage message) {
 		this.message = message;
 		if(!message.getContent().contains(" ")) {
+		    if(CommandRegistry.getPrefix().length() > 1) {
+                String tempargs[] = {};
+                this.args = tempargs;
+                this.name = message.getContent().substring(CommandRegistry.getPrefix().length());
+                return;
+            }
 		    String tempargs[] = {};
 		    this.args = tempargs;
-            this.name = message.getContent().substring(1).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
+            this.name = message.getContent().substring(CommandRegistry.getPrefix().length()).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
             return;
 
         } else {
-            String temp = message.getContent().substring(1).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
+            String temp = message.getContent().substring(CommandRegistry.getPrefix().length()).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
             this.name = temp.substring(0, temp.length() - 2);
             List<String> list = new ArrayList<String>();
             Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message.getContent().substring(this.name.length() + 2).replace(name + " ", ""));
