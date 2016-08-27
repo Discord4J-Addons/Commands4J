@@ -15,15 +15,24 @@ public class CommandContext {
 
 	public CommandContext(IMessage message) {
 		this.message = message;
-		this.name = message.getContent().substring(1).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
-		//this.args = (message.getContent().substring(message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length())).split("\\s+");
-		List<String> list = new ArrayList<String>();
-		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message.getContent().substring(1).replace(name + " ", ""));
-		while (m.find()) {
-			list.add(m.group(1));
-		}
-		String testargs[] = new String[list.size()];
-		this.args = list.toArray(testargs);
+		if(!message.getContent().contains(" ")) {
+		    String tempargs[] = {};
+		    this.args = tempargs;
+            this.name = message.getContent().substring(1).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
+            return;
+
+        } else {
+            String temp = message.getContent().substring(1).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
+            this.name = temp.substring(0, temp.length() - 2);
+            List<String> list = new ArrayList<String>();
+            Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message.getContent().substring(this.name.length() + 2).replace(name + " ", ""));
+            while (m.find()) {
+                list.add(m.group(1).replace("\"", ""));
+            }
+            String testargs[] = new String[list.size()];
+            this.args = list.toArray(testargs);
+            return;
+        }
 	}
 
 	public CommandContext(IMessage message, String name, String[] args) {
