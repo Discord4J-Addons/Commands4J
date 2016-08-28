@@ -9,7 +9,7 @@ public class CommandRegistry {
 	private static HashMap<IDiscordClient, CommandRegistry> registeries = new HashMap<>();
 
 	public static CommandRegistry getRegistryForClient(IDiscordClient client) {
-		throwExceptionIfPrefixIsInvalid();
+
 		
 		if (!registeries.containsKey(client)) {
 			registeries.put(client, new CommandRegistry());
@@ -19,24 +19,26 @@ public class CommandRegistry {
 	}
 
 	private List<Command> commands = new ArrayList<>();
-	public static String prefix = "";
+	public String prefix = "";
 
 	/**
 	 * Private constructor, has to be initialized in getRegistryForClient
 	 */
+<<<<<<< Updated upstream
 	private CommandRegistry() { }
 	
 	private static void throwExceptionIfPrefixIsInvalid() {
 		if (prefix == null || prefix.isEmpty()) throw new InvalidPrefixException("You can't have a null or empty prefix!");
 	}
+=======
+>>>>>>> Stashed changes
 
-	public static void setPrefix(String newPrefix) {
+
+	public void setPrefix(String newPrefix) {
 		prefix = newPrefix;
-		
-		throwExceptionIfPrefixIsInvalid();
 	}
 
-	public static String getPrefix() {
+	public String getPrefix() {
 		return prefix;
 	}
 
@@ -57,13 +59,6 @@ public class CommandRegistry {
 	public List<Command> getCommands() {
 		return commands;
 	}
-	
-	public static class InvalidPrefixException extends RuntimeException {
-		
-		public InvalidPrefixException(String desc) {
-			super(desc);
-		}
-		
-	}
+
 
 }

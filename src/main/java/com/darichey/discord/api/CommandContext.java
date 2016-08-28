@@ -16,27 +16,28 @@ public class CommandContext {
 	public CommandContext(IMessage message) {
 		this.message = message;
 		if(!message.getContent().contains(" ")) {
-		    if(CommandRegistry.getPrefix().length() > 1) {
-                String tempargs[] = {};
-                this.args = tempargs;
-                this.name = message.getContent().substring(CommandRegistry.getPrefix().length());
+		    if(CommandRegistry.getRegistryForClient(message.getClient()).getPrefix().length() > 1) {
+                String noArgs[] = {};
+                this.args = noArgs;
+                this.name = message.getContent().substring(CommandRegistry.getRegistryForClient(message.getClient()).getPrefix().length());
                 return;
             }
-		    String tempargs[] = {};
-		    this.args = tempargs;
-            this.name = message.getContent().substring(CommandRegistry.getPrefix().length()).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
+		    String noArgs[] = {};
+		    this.args = noArgs;
+            this.name = message.getContent().substring(CommandRegistry.getRegistryForClient(message.getClient()).getPrefix().length()).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
             return;
 
         } else {
-            String temp = message.getContent().substring(CommandRegistry.getPrefix().length()).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
+            
+            String temp = message.getContent().substring(CommandRegistry.getRegistryForClient(message.getClient()).getPrefix().length()).substring(0, message.getContent().contains(" ") ? message.getContent().indexOf(" ") + 1 : message.getContent().length() - 1);
             this.name = temp.substring(0, temp.length() - 2);
             List<String> list = new ArrayList<String>();
             Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(message.getContent().substring(this.name.length() + 2).replace(name + " ", ""));
             while (m.find()) {
                 list.add(m.group(1).replace("\"", ""));
             }
-            String testargs[] = new String[list.size()];
-            this.args = list.toArray(testargs);
+            String args[] = new String[list.size()];
+            this.args = list.toArray(args);
             return;
         }
 	}
@@ -58,4 +59,5 @@ public class CommandContext {
 	public String[] getArgs() {
 		return this.args;
 	}
+
 }
