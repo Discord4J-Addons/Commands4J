@@ -26,7 +26,7 @@ public class CommandRegistry {
 	 */
 	private CommandRegistry() { }
 	
-	private void throwExceptionIfPrefixIsInvalid() {
+	private static void throwExceptionIfPrefixIsInvalid() {
 		if (prefix == null || prefix.isEmpty()) throw new InvalidPrefixException("You can't have a null or empty prefix!");
 	}
 
