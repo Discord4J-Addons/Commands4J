@@ -32,6 +32,6 @@ The default prefix is always `!`, but you can easily set it using `CommandRegist
  * Austinv11 - Making the orginal Discord4J Library!
  * GrandPanda - Most of the base code and first commit!
  * poncethecat - Added quote support for arguments and this readme! 
- * Tons of documentation
+ * Chrislo27 - Tons of documentation
  
  
