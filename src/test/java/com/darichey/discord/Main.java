@@ -22,13 +22,13 @@ public class Main {
 		try (BufferedReader reader = new BufferedReader(new FileReader("token.txt"))){
 			TOKEN = reader.readLine();
 			client = new ClientBuilder().withToken(TOKEN).login();
-
-			Command test = new Command("ping", new Command.Options().withAliases("testAlias", "testAlias1"))
+			CommandRegistry.setPrefix("--");
+			Command test = new Command("ping", new Command.Options().withAliases("pings", "pinger"))
 					.onExecuted(context -> {
 						System.out.println(Arrays.toString(context.getArgs()));
+						System.out.println(context.getName());
 					})
 					.onFailure((context, reason) -> {
-
 					});
 
 			CommandRegistry.getRegistryForClient(client).register(test);

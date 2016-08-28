@@ -9,6 +9,8 @@ public class CommandRegistry {
 	private static HashMap<IDiscordClient, CommandRegistry> registeries = new HashMap<>();
 
 	public static CommandRegistry getRegistryForClient(IDiscordClient client) {
+
+		
 		if (!registeries.containsKey(client)) {
 			registeries.put(client, new CommandRegistry());
 			client.getDispatcher().registerListener(new CommandDispatcher());
@@ -17,7 +19,28 @@ public class CommandRegistry {
 	}
 
 	private List<Command> commands = new ArrayList<>();
-	public String prefix = "!";
+	public String prefix = "";
+
+	/**
+	 * Private constructor, has to be initialized in getRegistryForClient
+	 */
+<<<<<<< Updated upstream
+	private CommandRegistry() { }
+	
+	private static void throwExceptionIfPrefixIsInvalid() {
+		if (prefix == null || prefix.isEmpty()) throw new InvalidPrefixException("You can't have a null or empty prefix!");
+	}
+=======
+>>>>>>> Stashed changes
+
+
+	public void setPrefix(String newPrefix) {
+		prefix = newPrefix;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
 
 	public void register(Command command) {
 		if (!commands.stream().filter(cmd -> cmd.name.equalsIgnoreCase(command.name)).findFirst().isPresent()) {
@@ -36,4 +59,6 @@ public class CommandRegistry {
 	public List<Command> getCommands() {
 		return commands;
 	}
+
+
 }
