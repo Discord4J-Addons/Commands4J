@@ -26,7 +26,7 @@ public class CommandContext {
 		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(messageContent.replace(registry.getPrefix(), "").replace(name, ""));
 		//Full creds to dec for the awesome regex!
 		while (m.find()) {
-			list.add(m.group(1));
+			list.add(m.group(1).replace("\"", ""));
 		}
 		String args[] = new String[list.size()];
 		this.args = list.toArray(args);
