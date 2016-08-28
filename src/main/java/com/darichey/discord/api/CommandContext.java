@@ -2,6 +2,11 @@ package com.darichey.discord.api;
 
 import sx.blah.discord.handle.obj.IMessage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CommandContext {
 
 	private final IMessage message;
@@ -17,9 +22,13 @@ public class CommandContext {
 		final int indexOfSpace = messageContent.indexOf(' ');
 		this.name = messageContent.substring(prefixLength)
 				.substring(0, indexOfSpace != -1 ? indexOfSpace : messageContent.length());
-		this.args = indexOfSpace < messageContent.length() - 1
-				? messageContent.substring(indexOfSpace + 1).split("\\s+")
-				: new String[0];
+		List<String> list = new ArrayList<String>();
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(messageContent.replace(registry.getPrefix(), "").replace(name, ""));
+		while (m.find()) {
+			list.add(m.group(1));
+		}
+		String args[] = new String[list.size()];
+		this.args = list.toArray(args);
 	}
 
 	public CommandContext(IMessage message, String name, String[] args) {
