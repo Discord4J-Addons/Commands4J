@@ -24,6 +24,7 @@ public class CommandContext {
 				.substring(0, indexOfSpace != -1 ? indexOfSpace : messageContent.length());
 		List<String> list = new ArrayList<String>();
 		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(messageContent.replace(registry.getPrefix(), "").replace(name, ""));
+		//Full creds to dec for the awesome regex!
 		while (m.find()) {
 			list.add(m.group(1));
 		}
