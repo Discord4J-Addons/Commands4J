@@ -9,8 +9,8 @@ public class CommandContext {
 	private final String[] args;
 	private final CommandRegistry registry;
 
-	public CommandContext(CommandRegistry registry, IMessage message) {
-		this.registry = registry;
+	public CommandContext(IMessage message) {
+		this.registry = CommandRegistry.getRegistryForClient(message.getClient());
 		this.message = message;
 		final int prefixLength = registry.getPrefix().length();
 		final String messageContent = message.getContent();
@@ -22,8 +22,8 @@ public class CommandContext {
 				: new String[0];
 	}
 
-	public CommandContext(CommandRegistry registry, IMessage message, String name, String[] args) {
-		this.registry = registry;
+	public CommandContext(IMessage message, String name, String[] args) {
+		this.registry = CommandRegistry.getRegistryForClient(message.getClient());
 		this.message = message;
 		this.name = name;
 		this.args = args;

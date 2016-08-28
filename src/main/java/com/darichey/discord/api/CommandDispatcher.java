@@ -22,7 +22,7 @@ class CommandDispatcher implements IListener<MessageReceivedEvent> {
 			if (command.isPresent()) {
 				if (command.get().options.caseSensitive && !commandName.equals(command.get().name)) return; // If it's case sensitive, check if the cases match
 
-				CommandContext context = new CommandContext(registry, event.getMessage());
+				CommandContext context = new CommandContext(event.getMessage());
 
 				EnumSet<Permissions> requiredPermissions = command.get().options.requiredPermissions;
 				boolean hasPermission = event.getMessage().getChannel().getModifiedPermissions(event.getMessage().getAuthor()).containsAll(requiredPermissions);
