@@ -1,37 +1,42 @@
-#Commands4J
- Commands4J is an easy-to-use command framework for [Discord4J](http://github.com/austinv11/Discord4J).
- 
-I could sit here and talk about how great Commands4J is, but that'd be pointless. Let me show you.
- 
- Add a command:
- 
- ```
- Command ping = new Command("ping", new Command.Options().withAliases("testAlias", "testAlias1"))
- 					.onExecuted(context -> {
- 						//Put what you want the command to do here.
- 						//You can even easily get the arguments of the command easily!
- 						String args[] = context.getArgs();
- 					})
- 					.onFailure((context, reason) -> {
- 						//If the command fails, put what should happen here.
- 					});
- ```
- 
- Then all you have to do is register it! 
- 
- `CommandRegistry.getRegistryForClient(the client object).register(ping);`
- 
-Isn't that easy? Using Commands.Options, you can even easily add aliases, require specific permissions, and more!
- 
-The default prefix is always `!`, but you can easily set it using `CommandRegistry.setPrefix("prefix")`.
- 
-#Errors and Contributors
-##Errors
- If there is a problem with Commands4J please feel free to either open an issue or give us feedback on the [Discord4J official server](https://discord.gg/NTC87qe).
-##Contributors
- * Austinv11 - Making the orginal Discord4J Library!
- * GrandPanda - Most of the base code and first commit!
- * poncethecat - Added quote support for arguments and this readme! 
- * Chrislo27 - Tons of documentation
- 
- 
+#Commands4J [![](https://jitpack.io/v/Discord4J-Addons/Commands4J.svg)](https://jitpack.io/#Discord4J-Addons/Commands4J)
+Commands4J is an easy-to-use functional command framework for [Discord4J](http://github.com/austinv11/Discord4J).
+
+##Adding Commands4J as a dependency
+###With Maven:
+```xml
+<repository>
+	<id>jitpack.io</id>
+	<url>https://jitpack.io</url>
+</repository>
+
+<dependency>
+	<groupId>com.github.Discord4J-Addons</groupId>
+	<artifactId>Commands4J</artifactId>
+	<version>1.0.1</version>
+</dependency>
+```
+
+###With Gradle:
+```groovy
+maven { url 'https://jitpack.io' }
+
+compile 'com.github.Discord4J-Addons:Commands4J:1.0.1'
+```
+
+##Using Commands4J
+Creating commands with C4J is extremely simple. At the very least, a command needs a name and a function to execute when
+the command is called. For example, this is a simple "ping" command:
+```java
+Command ping = new Command("ping")
+		.onExecuted(context ->
+			context.getMessage().getChannel().sendMessage("Pong!");
+		);
+
+IDiscordClient client = ...; // Client gotten from Discord4J
+CommandRegistry.getFor(client).register(ping);
+```
+You can also pass Options to the command to add aliases, set auto-delete, require permissions, and more!
+
+##Additional Info
+You can contact me on the [Official Discord4J Server](https://discord.gg/NxGAeCY) for help with this API.
+
