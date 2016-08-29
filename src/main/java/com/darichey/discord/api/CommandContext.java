@@ -17,19 +17,14 @@ public class CommandContext {
 	public CommandContext(IMessage message) {
 		this.registry = CommandRegistry.getRegistryForClient(message.getClient());
 		this.message = message;
-		final int prefixLength = registry.getPrefix().length();
-		final String messageContent = message.getContent();
-		final int indexOfSpace = messageContent.indexOf(' ');
-		this.name = messageContent.substring(prefixLength)
-				.substring(0, indexOfSpace != -1 ? indexOfSpace : messageContent.length());
-		List<String> list = new ArrayList<String>();
-		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(messageContent.replace(registry.getPrefix(), "").replace(name, ""));
-		//Full creds to dec for the awesome regex!
+		final String content = message.getContent();
+		this.name = content.substring(registry.getPrefix().length()).substring(0, content.contains(" ") ? content.indexOf(" ") : content.length() - 1);
+		List<String> list = new ArrayList<>();
+		Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(content.substring(registry.getPrefix().length() + name.length())); // Thanks @dec for regex
 		while (m.find()) {
 			list.add(m.group(1).replace("\"", ""));
 		}
-		String args[] = new String[list.size()];
-		this.args = list.toArray(args);
+		this.args = list.toArray(new String[list.size()]);
 	}
 
 	public CommandContext(IMessage message, String name, String[] args) {

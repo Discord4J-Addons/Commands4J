@@ -12,10 +12,8 @@ import java.util.function.Consumer;
 public class Command {
 	public final String name;
 	public final Options options;
-	protected Consumer<CommandContext> onExecuted = context -> {
-	};
-	protected BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {
-	};
+	protected Consumer<CommandContext> onExecuted = context -> {};
+	protected BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {};
 
 	/**
 	 * Initialize with the command's name and options.
