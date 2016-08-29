@@ -1,4 +1,4 @@
-#Commands4J
+#Commands4J [![](https://jitpack.io/v/Discord4J-Addons/Commands4J.svg)](https://jitpack.io/#Discord4J-Addons/Commands4J)
  Commands4J is an easy-to-use command framework for [Discord4J](http://github.com/austinv11/Discord4J).
  
 I could sit here and talk about how great Commands4J is, but that'd be pointless. Let me show you.
