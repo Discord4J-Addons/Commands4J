@@ -23,13 +23,11 @@ public class Main {
 			TOKEN = reader.readLine();
 			client = new ClientBuilder().withToken(TOKEN).login();
 
-			Command test = new Command("ping", new Command.Options().withAliases("testAlias", "testAlias1"))
-					.onExecuted(context -> {
-						System.out.println(Arrays.toString(context.getArgs()));
-					})
-					.onFailure((context, reason) -> {
-
-					});
+			Command test = new Command("test")
+					.withAliases("tast", "trst")
+					.onExecuted(context ->
+						sendMessage(context.getMessage().getChannel(), "Pong!")
+					);
 
 			CommandRegistry.getRegistryForClient(client).register(test);
 

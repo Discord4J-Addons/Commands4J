@@ -20,15 +20,15 @@ class CommandDispatcher implements IListener<MessageReceivedEvent> {
 			String commandName = content.substring(1, content.contains(" ") ? content.indexOf(" ") : content.length());
 			Optional<Command> command = registry.getCommandByName(commandName, true);
 			if (command.isPresent()) {
-				if (command.get().options.caseSensitive && !commandName.equals(command.get().name)) return; // If it's case sensitive, check if the cases match
+				if (command.get().isCaseSensitive() && !commandName.equals(command.get().getName())) return; // If it's case sensitive, check if the cases match
 
 				CommandContext context = new CommandContext(event.getMessage());
 
-				EnumSet<Permissions> requiredPermissions = command.get().options.requiredPermissions;
+				EnumSet<Permissions> requiredPermissions = command.get().getRequiredPermissions();
 				boolean hasPermission = event.getMessage().getChannel().getModifiedPermissions(event.getMessage().getAuthor()).containsAll(requiredPermissions);
 				if (hasPermission) {
 					command.get().onExecuted.accept(context);
-					if (command.get().options.deleteCommand) {
+					if (command.get().deletesCommand()) {
 						RequestBuffer.request(() -> {
 							try {
 								event.getMessage().delete();

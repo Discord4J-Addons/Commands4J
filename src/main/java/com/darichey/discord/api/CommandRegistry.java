@@ -4,6 +4,7 @@ import sx.blah.discord.api.IDiscordClient;
 
 import java.util.*;
 
+@SuppressWarnings("ACCESS")
 public class CommandRegistry {
 
 	private static HashMap<IDiscordClient, CommandRegistry> registries = new HashMap<>();
@@ -34,10 +35,10 @@ public class CommandRegistry {
 	 * @param command
 	 */
 	public void register(Command command) {
-		if (!commands.stream().filter(cmd -> cmd.name.equalsIgnoreCase(command.name)).findFirst().isPresent()) {
+		if (!commands.stream().filter(cmd -> cmd.getName().equalsIgnoreCase(command.getName())).findFirst().isPresent()) {
 			commands.add(command);
 		} else {
-			throw new IllegalArgumentException("Attempt to register two commands with the same name: " + command.name);
+			throw new IllegalArgumentException("Attempt to register two commands with the same name: " + command.getName());
 		}
 	}
 
@@ -49,7 +50,7 @@ public class CommandRegistry {
 	 */
 	public Optional<Command> getCommandByName(String name, boolean includeAlias) {
 		return commands.stream().filter(c ->
-			c.name.equalsIgnoreCase(name) || (includeAlias && c.options.aliases.contains(name))
+			c.getName().equalsIgnoreCase(name) || (includeAlias && c.getAliases().contains(name))
 		).findFirst();
 	}
 

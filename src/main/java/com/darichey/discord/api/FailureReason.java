@@ -4,7 +4,7 @@ public enum FailureReason {
 
 	/**
 	 * If the author of the command-invoker is missing the Discord permissions required by
-	 * {@link com.darichey.discord.api.Command.Options#requiredPermissions}
+	 * {@link com.darichey.discord.api.Command#requiredPermissions}
 	 */
 	AUTHOR_MISSING_PERMISSIONS,
 

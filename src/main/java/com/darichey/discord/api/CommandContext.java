@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The context of a command. Contains useful information about where and how a command was executed.
+ */
 public class CommandContext {
 
 	private final IMessage message;
@@ -25,13 +28,6 @@ public class CommandContext {
 			list.add(m.group(1).replace("\"", ""));
 		}
 		this.args = list.toArray(new String[list.size()]);
-	}
-
-	public CommandContext(IMessage message, String name, String[] args) {
-		this.registry = CommandRegistry.getRegistryForClient(message.getClient());
-		this.message = message;
-		this.name = name;
-		this.args = args;
 	}
 
 	/**

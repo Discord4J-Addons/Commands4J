@@ -9,35 +9,32 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+@SuppressWarnings("WeakerAccess")
 public class Command {
-	public final String name;
-	public final Options options;
-	protected Consumer<CommandContext> onExecuted = context -> {};
-	protected BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {};
+
+	private final String name;
+	private String description = "";
+	private Set<String> aliases = Collections.emptySet();
+	private boolean caseSensitive = false;
+	private boolean deleteCommand = false;
+	private EnumSet<Permissions> requiredPermissions = EnumSet.noneOf(Permissions.class);
+
+	Consumer<CommandContext> onExecuted = context -> {};
+	BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {};
 
 	/**
-	 * Initialize with the command's name and options.
-	 * @param name
-	 * @param options
-	 */
-	public Command(String name, Options options) {
-		this.name = name;
-		this.options = options;
-	}
-
-	/**
-	 * Initialize with the command's name, and default options.
-	 * @param name
+	 * Initialize with the command's name
+	 * @param name The name of the command
 	 */
 	public Command(String name) {
-		this(name, new Options());
+		this.name = name;
 	}
 
 	/**
 	 * The function to execute when the command is successful.
 	 *
 	 * @param function The function to execute
-	 * @return This for chaining
+	 * @return This command instance
 	 */
 	public Command onExecuted(Consumer<CommandContext> function) {
 		this.onExecuted = function;
@@ -48,74 +45,95 @@ public class Command {
 	 * The function to execute when the command fails.
 	 *
 	 * @param function The function to execute
-	 * @return This for chaining
+	 * @return This command instance
 	 */
 	public Command onFailure(BiConsumer<CommandContext, FailureReason> function) {
 		this.onFailure = function;
 		return this;
 	}
 
-	public static class Options {
-		public Set<String> aliases = Collections.emptySet();
-		public String description = "";
-		public boolean caseSensitive = false;
-		public boolean deleteCommand = false;
-		public EnumSet<Permissions> requiredPermissions = EnumSet.noneOf(Permissions.class);
-
-		/**
-		 * @param aliases Alternative aliases for the command
-		 * @return This for chaining
-		 * @see #withAliases(String...)
-		 */
-		public Options withAliases(String... aliases) {
-			Set<String> set = new HashSet<>();
-			Collections.addAll(set, aliases);
-			return withAliases(set);
-		}
-
-		/**
-		 * @param aliases Alternative aliases for the command
-		 * @return This for chaining
-		 */
-		public Options withAliases(Set<String> aliases) {
-			this.aliases = aliases;
-			return this;
-		}
-
-		/**
-		 * @param description A description of the command
-		 * @return This for chaining
-		 */
-		public Options withDescription(String description) {
-			this.description = description;
-			return this;
-		}
-
-		/**
-		 * @param caseSensitive Whether the command detection should be case-sensitive
-		 * @return This for chaining
-		 */
-		public Options caseSensitive(boolean caseSensitive) {
-			this.caseSensitive = caseSensitive;
-			return this;
-		}
-
-		/**
-		 * @param deleteCommand Whether to delete the command-invoking message if successful
-		 * @return This for chaining
-		 */
-		public Options deleteCommand(boolean deleteCommand) {
-			this.deleteCommand = deleteCommand;
-			return this;
-		}
-
-		/**
-		 * @param requiredPermissions The required Discord permissions to use the command
-		 * @return This for chaining
-		 */
-		public Options requirePermissions(EnumSet<Permissions> requiredPermissions) {
-			this.requiredPermissions = requiredPermissions;
-			return this;
-		}
+	/**
+	 * An arbitrary value for the description of the command. This isn't used by the API.
+	 * @param description The description.
+	 * @return This command instance.
+	 */
+	public Command withDescription(String description) {
+		this.description = description;
+		return this;
 	}
+
+	/**
+	 * Aliases that will also trigger this command (besides the name). No two commands may have the same alias.
+	 * @param aliases The aliases.
+	 * @return This command instance.
+	 */
+	public Command withAliases(Set<String> aliases) {
+		this.aliases = aliases;
+		return this;
+	}
+
+	/**
+	 * Aliases that will also trigger this command (besides the name). No two commands may have the same alias.
+	 * @param aliases The aliases.
+	 * @return This command instance.
+	 */
+	public Command withAliases(String... aliases) {
+		Collections.addAll(this.aliases, aliases);
+		return this;
+	}
+
+	/**
+	 * If true, the command will trigger regardless of case. (i.e. both !ping and !PiNg will trigger the command)
+	 * @param caseSensitive Case sensitive or not.
+	 * @return This command instance.
+	 */
+	public Command caseSensitive(boolean caseSensitive) {
+		this.caseSensitive = caseSensitive;
+		return this;
+	}
+
+	/**
+	 * If true, the message that triggered this command will automatically be deleted.
+	 * @param deleteCommand To delete or not.
+	 * @return This command instance.
+	 */
+	public Command deleteCommand(boolean deleteCommand) {
+		this.deleteCommand = deleteCommand;
+		return this;
+	}
+
+	/**
+	 * The set of permissions a person requires to execute this command. Failing to meet these requirements will result in {@link FailureReason#AUTHOR_MISSING_PERMISSIONS}
+	 * @param requiredPermissions The required permissions.
+	 * @return This commnad instance.
+	 */
+	public Command requirePermissions(EnumSet<Permissions> requiredPermissions) {
+		this.requiredPermissions = requiredPermissions;
+		return this;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Set<String> getAliases() {
+		return aliases;
+	}
+
+	public boolean isCaseSensitive() {
+		return caseSensitive;
+	}
+
+	public boolean deletesCommand() {
+		return deleteCommand;
+	}
+
+	public EnumSet<Permissions> getRequiredPermissions() {
+		return requiredPermissions;
+	}
+
 }
