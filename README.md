@@ -12,7 +12,7 @@ Commands4J is an easy-to-use functional command framework for [Discord4J](http:/
 <dependency>
 	<groupId>com.github.Discord4J-Addons</groupId>
 	<artifactId>Commands4J</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 </dependency>
 ```
 
@@ -20,7 +20,7 @@ Commands4J is an easy-to-use functional command framework for [Discord4J](http:/
 ```groovy
 maven { url 'https://jitpack.io' }
 
-compile 'com.github.Discord4J-Addons:Commands4J:1.0.1'
+compile 'com.github.Discord4J-Addons:Commands4J:1.0.2'
 ```
 
 ##Using Commands4J
