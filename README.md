@@ -28,6 +28,7 @@ Creating commands with C4J is extremely simple. At the very least, a command nee
 the command is called. For example, this is a simple "ping" command:
 ```java
 Command ping = new Command("ping")
+		.withDescription("Ping -> Pong!")
 		.onExecuted(context ->
 			context.getMessage().getChannel().sendMessage("Pong!");
 		);
@@ -35,7 +36,7 @@ Command ping = new Command("ping")
 IDiscordClient client = ...; // Client gotten from Discord4J
 CommandRegistry.getFor(client).register(ping);
 ```
-You can also pass Options to the command to add aliases, set auto-delete, require permissions, and more!
+The command class also has other chaining methods to add aliases, set auto-delete, require permissions, and more!
 
 ##Additional Info
 You can contact me on the [Official Discord4J Server](https://discord.gg/NxGAeCY) for help with this API.
