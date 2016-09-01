@@ -34,7 +34,7 @@ Command ping = new Command("ping")
 		);
 
 IDiscordClient client = ...; // Client gotten from Discord4J
-CommandRegistry.getFor(client).register(ping);
+CommandRegistry.getForClient(client).register(ping);
 ```
 The command class also has other chaining methods to add aliases, set auto-delete, require permissions, and more!
 

@@ -29,7 +29,7 @@ public class Main {
 						sendMessage(context.getMessage().getChannel(), "Pong!")
 					);
 
-			CommandRegistry.getRegistryForClient(client).register(test);
+			CommandRegistry.getForClient(client).register(test);
 
 		} catch (IOException | DiscordException e) {
 			e.printStackTrace();

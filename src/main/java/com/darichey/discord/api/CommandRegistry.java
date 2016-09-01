@@ -14,7 +14,7 @@ public class CommandRegistry {
 	 * @param client The client object to associate with
 	 * @return The CommandRegistry for the client
 	 */
-	public static CommandRegistry getRegistryForClient(IDiscordClient client) {
+	public static CommandRegistry getForClient(IDiscordClient client) {
 		if (!registries.containsKey(client)) {
 			registries.put(client, new CommandRegistry());
 			client.getDispatcher().registerListener(new CommandDispatcher());
@@ -23,7 +23,7 @@ public class CommandRegistry {
 	}
 
 	/**
-	 * Private so you have to use {@link CommandRegistry#getRegistryForClient(IDiscordClient)}
+	 * Private so you have to use {@link CommandRegistry#getForClient(IDiscordClient)}
 	 */
 	private CommandRegistry() {}
 
