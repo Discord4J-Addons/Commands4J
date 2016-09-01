@@ -18,7 +18,7 @@ public class CommandContext {
 	private final CommandRegistry registry;
 
 	public CommandContext(IMessage message) {
-		this.registry = CommandRegistry.getRegistryForClient(message.getClient());
+		this.registry = CommandRegistry.getForClient(message.getClient());
 		this.message = message;
 		final String content = message.getContent();
 		this.name = content.substring(registry.getPrefix().length()).substring(0, content.contains(" ") ? content.indexOf(" ") : content.length() - 1);

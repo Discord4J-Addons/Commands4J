@@ -4,7 +4,6 @@ import sx.blah.discord.handle.obj.Permissions;
 
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -19,11 +18,14 @@ public class Command {
 	private boolean deleteCommand = false;
 	private EnumSet<Permissions> requiredPermissions = EnumSet.noneOf(Permissions.class);
 
-	Consumer<CommandContext> onExecuted = context -> {};
-	BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {};
+	Consumer<CommandContext> onExecuted = context -> {
+	};
+	BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {
+	};
 
 	/**
 	 * Initialize with the command's name
+	 *
 	 * @param name The name of the command
 	 */
 	public Command(String name) {
@@ -54,6 +56,7 @@ public class Command {
 
 	/**
 	 * An arbitrary value for the description of the command. This isn't used by the API.
+	 *
 	 * @param description The description.
 	 * @return This command instance.
 	 */
@@ -64,6 +67,7 @@ public class Command {
 
 	/**
 	 * Aliases that will also trigger this command (besides the name). No two commands may have the same alias.
+	 *
 	 * @param aliases The aliases.
 	 * @return This command instance.
 	 */
@@ -74,6 +78,7 @@ public class Command {
 
 	/**
 	 * Aliases that will also trigger this command (besides the name). No two commands may have the same alias.
+	 *
 	 * @param aliases The aliases.
 	 * @return This command instance.
 	 */
@@ -84,6 +89,7 @@ public class Command {
 
 	/**
 	 * If true, the command will trigger regardless of case. (i.e. both !ping and !PiNg will trigger the command)
+	 *
 	 * @param caseSensitive Case sensitive or not.
 	 * @return This command instance.
 	 */
@@ -94,6 +100,7 @@ public class Command {
 
 	/**
 	 * If true, the message that triggered this command will automatically be deleted.
+	 *
 	 * @param deleteCommand To delete or not.
 	 * @return This command instance.
 	 */
@@ -104,6 +111,7 @@ public class Command {
 
 	/**
 	 * The set of permissions a person requires to execute this command. Failing to meet these requirements will result in {@link FailureReason#AUTHOR_MISSING_PERMISSIONS}
+	 *
 	 * @param requiredPermissions The required permissions.
 	 * @return This commnad instance.
 	 */

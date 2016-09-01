@@ -15,12 +15,13 @@ class CommandDispatcher implements IListener<MessageReceivedEvent> {
 	@Override
 	public void handle(MessageReceivedEvent event) {
 		String content = event.getMessage().getContent();
-		CommandRegistry registry = CommandRegistry.getRegistryForClient(event.getClient());
+		CommandRegistry registry = CommandRegistry.getForClient(event.getClient());
 		if (content.startsWith(registry.getPrefix())) {
 			String commandName = content.substring(1, content.contains(" ") ? content.indexOf(" ") : content.length());
 			Optional<Command> command = registry.getCommandByName(commandName, true);
 			if (command.isPresent()) {
-				if (command.get().isCaseSensitive() && !commandName.equals(command.get().getName())) return; // If it's case sensitive, check if the cases match
+				if (command.get().isCaseSensitive() && !commandName.equals(command.get().getName()))
+					return; // If it's case sensitive, check if the cases match
 
 				CommandContext context = new CommandContext(event.getMessage());
 
