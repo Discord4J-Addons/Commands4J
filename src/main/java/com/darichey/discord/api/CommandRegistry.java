@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("ACCESS")
+@SuppressWarnings("WeakerAccess")
 public class CommandRegistry {
 
 	private static HashMap<IDiscordClient, CommandRegistry> registries = new HashMap<>();
