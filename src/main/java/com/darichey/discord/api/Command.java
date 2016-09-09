@@ -13,6 +13,7 @@ public class Command {
 
 	private final String name;
 	private String description = "";
+	private String usage = "";
 	private Set<String> aliases = Collections.emptySet();
 	private boolean caseSensitive = false;
 	private boolean deleteCommand = false;
@@ -62,6 +63,17 @@ public class Command {
 	 */
 	public Command withDescription(String description) {
 		this.description = description;
+		return this;
+	}
+
+/**
+	 * An arbitrary value for the usage of the command. This isn't used by the API.
+	 *
+	 * @param usage The usage.
+	 * @return This command instance.
+	 */
+	public Command withUsage(String usage) {
+		this.usage = usage;
 		return this;
 	}
 
@@ -126,6 +138,10 @@ public class Command {
 
 	public String getDescription() {
 		return description;
+	}
+	
+	public String getUsage() {
+		return usage;
 	}
 
 	public Set<String> getAliases() {
