@@ -13,6 +13,7 @@ public class Command {
 
 	private final String name;
 	private String description = "";
+	private String usage = "";
 	private Set<String> aliases = Collections.emptySet();
 	private boolean caseSensitive = false;
 	private boolean deleteCommand = false;
@@ -126,6 +127,10 @@ public class Command {
 
 	public String getDescription() {
 		return description;
+	}
+	
+	public String getUsage() {
+		return usage;
 	}
 
 	public Set<String> getAliases() {
