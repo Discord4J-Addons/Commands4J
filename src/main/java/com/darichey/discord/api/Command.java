@@ -66,6 +66,17 @@ public class Command {
 		return this;
 	}
 
+/**
+	 * An arbitrary value for the usage of the command. This isn't used by the API.
+	 *
+	 * @param usage The usage.
+	 * @return This command instance.
+	 */
+	public Command withUsage(String usage) {
+		this.usage = usage;
+		return this;
+	}
+
 	/**
 	 * Aliases that will also trigger this command (besides the name). No two commands may have the same alias.
 	 *
