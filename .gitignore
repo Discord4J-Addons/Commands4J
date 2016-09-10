@@ -45,5 +45,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-/token.txt
-/.idea/
+token.txt
+.idea/
+target/
