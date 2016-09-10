@@ -31,28 +31,28 @@ public class CommandContext {
 	}
 
 	/**
-	 * @return The message object
+	 * @return The message object.
 	 */
 	public IMessage getMessage() {
 		return this.message;
 	}
 
 	/**
-	 * @return The command's name
+	 * @return The command's name.
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * @return The arguments, or an empty array if there aren't any
+	 * @return The arguments, or an empty array if there aren't any.
 	 */
 	public String[] getArgs() {
 		return this.args;
 	}
 
 	/**
-	 * @return The CommandRegistry
+	 * @return The CommandRegistry of the guild this context is for.
 	 */
 	public CommandRegistry getRegistry() {
 		return this.registry;

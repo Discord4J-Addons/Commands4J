@@ -24,19 +24,17 @@ public class Command {
 	BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {};
 
 	/**
-	 * Initialize with the command's name
-	 *
-	 * @param name The name of the command
+	 * Initialize with the command's name.
+	 * @param name The name of the command.
 	 */
 	public Command(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * The function to execute when the command is successful.
-	 *
-	 * @param function The function to execute
-	 * @return This command instance
+	 * The function to execute when the command is called.
+	 * @param function The function to execute.
+	 * @return This command instance.
 	 */
 	public Command onExecuted(Consumer<CommandContext> function) {
 		this.onExecuted = function;
@@ -45,9 +43,8 @@ public class Command {
 
 	/**
 	 * The function to execute when the command fails.
-	 *
-	 * @param function The function to execute
-	 * @return This command instance
+	 * @param function The function to execute.
+	 * @return This command instance.
 	 */
 	public Command onFailure(BiConsumer<CommandContext, FailureReason> function) {
 		this.onFailure = function;
@@ -56,7 +53,6 @@ public class Command {
 
 	/**
 	 * An arbitrary value for the description of the command. This isn't used by the API.
-	 *
 	 * @param description The description.
 	 * @return This command instance.
 	 */
@@ -65,9 +61,8 @@ public class Command {
 		return this;
 	}
 
-/**
+	/**
 	 * An arbitrary value for the usage of the command. This isn't used by the API.
-	 *
 	 * @param usage The usage.
 	 * @return This command instance.
 	 */
@@ -78,7 +73,6 @@ public class Command {
 
 	/**
 	 * Aliases that will also trigger this command (besides the name). No two commands may have the same alias.
-	 *
 	 * @param aliases The aliases.
 	 * @return This command instance.
 	 */
@@ -89,7 +83,6 @@ public class Command {
 
 	/**
 	 * Aliases that will also trigger this command (besides the name). No two commands may have the same alias.
-	 *
 	 * @param aliases The aliases.
 	 * @return This command instance.
 	 */
@@ -100,7 +93,6 @@ public class Command {
 
 	/**
 	 * If true, the command will trigger regardless of case. (i.e. both !ping and !PiNg will trigger the command)
-	 *
 	 * @param caseSensitive Case sensitive or not.
 	 * @return This command instance.
 	 */
@@ -111,7 +103,6 @@ public class Command {
 
 	/**
 	 * If true, the message that triggered this command will automatically be deleted.
-	 *
 	 * @param deleteCommand To delete or not.
 	 * @return This command instance.
 	 */
@@ -122,9 +113,8 @@ public class Command {
 
 	/**
 	 * The set of permissions a person requires to execute this command. Failing to meet these requirements will result in {@link FailureReason#AUTHOR_MISSING_PERMISSIONS}
-	 *
 	 * @param requiredPermissions The required permissions.
-	 * @return This commnad instance.
+	 * @return This command instance.
 	 */
 	public Command requirePermissions(EnumSet<Permissions> requiredPermissions) {
 		this.requiredPermissions = requiredPermissions;

@@ -14,9 +14,8 @@ public class CommandRegistry {
 
 	/**
 	 * Get the CommandRegistry associated with the client, or create a new one if not present.
-	 *
-	 * @param client The client object to associate with
-	 * @return The CommandRegistry for the client
+	 * @param client The client object to associate with.
+	 * @return The CommandRegistry for the client.
 	 */
 	public static CommandRegistry getForClient(IDiscordClient client) {
 		if (!registries.containsKey(client)) {
@@ -29,16 +28,14 @@ public class CommandRegistry {
 	/**
 	 * Private so you have to use {@link CommandRegistry#getForClient(IDiscordClient)}
 	 */
-	private CommandRegistry() {
-	}
+	private CommandRegistry() {}
 
 	private List<Command> commands = new ArrayList<>();
 	private String prefix = "!";
 
 	/**
 	 * Register a command.
-	 *
-	 * @param command
+	 * @param command The command.
 	 */
 	public void register(Command command) {
 		if (!commands.stream().filter(cmd -> cmd.getName().equalsIgnoreCase(command.getName())).findFirst().isPresent()) {
@@ -58,10 +55,9 @@ public class CommandRegistry {
 
 	/**
 	 * Get a command by its name.
-	 *
-	 * @param name         The command name
-	 * @param includeAlias If aliases can be used to search, otherwise it has to be the original name
-	 * @return The command if present
+	 * @param name The command name.
+	 * @param includeAlias If aliases can be used to search, otherwise it has to be the original name.
+	 * @return An optional value of the command.
 	 */
 	public Optional<Command> getCommandByName(String name, boolean includeAlias) {
 		return commands.stream().filter(c ->
@@ -71,17 +67,15 @@ public class CommandRegistry {
 
 	/**
 	 * Get all commands registered.
-	 *
-	 * @return A list of commands
+	 * @return A list of commands.
 	 */
 	public List<Command> getCommands() {
 		return commands;
 	}
 
 	/**
-	 * Set the prefix to use.
-	 *
-	 * @param prefix The new prefix
+	 * Sets the prefix that commands registered to this registry will be activated by.
+	 * @param prefix The new prefix.
 	 */
 	public void setPrefix(String prefix) {
 		if (prefix == null) throw new IllegalArgumentException("The new prefix cannot be null!");
@@ -89,7 +83,7 @@ public class CommandRegistry {
 	}
 
 	/**
-	 * @return The prefix
+	 * @return The prefix that commands registered to this registry will be activated by.
 	 */
 	public String getPrefix() {
 		return this.prefix;
