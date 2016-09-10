@@ -49,6 +49,14 @@ public class CommandRegistry {
 	}
 
 	/**
+	 * Registers an array of commands. Purely for convenience.
+	 * @param commands Array/Varargs of commands to register
+	 */
+	public void registerAll(Command... commands) {
+		for (Command command : commands) register(command);
+	}
+
+	/**
 	 * Get a command by its name.
 	 *
 	 * @param name         The command name
