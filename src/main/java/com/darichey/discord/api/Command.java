@@ -4,6 +4,7 @@ import sx.blah.discord.handle.obj.Permissions;
 
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -14,15 +15,13 @@ public class Command {
 	private final String name;
 	private String description = "";
 	private String usage = "";
-	private Set<String> aliases = Collections.emptySet();
+	private Set<String> aliases = new HashSet<>();
 	private boolean caseSensitive = false;
 	private boolean deleteCommand = false;
 	private EnumSet<Permissions> requiredPermissions = EnumSet.noneOf(Permissions.class);
 
-	Consumer<CommandContext> onExecuted = context -> {
-	};
-	BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {
-	};
+	Consumer<CommandContext> onExecuted = context -> {};
+	BiConsumer<CommandContext, FailureReason> onFailure = (context, failureReason) -> {};
 
 	/**
 	 * Initialize with the command's name
