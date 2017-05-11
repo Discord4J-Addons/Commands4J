@@ -16,9 +16,8 @@ class CommandDispatcher implements IListener<MessageReceivedEvent> {
 	public void handle(MessageReceivedEvent event) {
 		String content = event.getMessage().getContent();
 		CommandRegistry registry = CommandRegistry.getForClient(event.getClient());
-		String prefix = registry.getPrefix();
-		if (content.startsWith(prefix)) {
-			String commandName = content.substring(prefix.length(), content.contains(" ") ? content.indexOf(" ") : content.length());
+		if (content.startsWith(registry.getPrefix())) {
+			String commandName = content.substring(1, content.contains(" ") ? content.indexOf(" ") : content.length());
 			Optional<Command> command = registry.getCommandByName(commandName, true);
 			if (command.isPresent()) {
 				if (command.get().isCaseSensitive() && !commandName.equals(command.get().getName()))
