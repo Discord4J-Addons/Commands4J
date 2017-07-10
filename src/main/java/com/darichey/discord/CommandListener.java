@@ -15,8 +15,6 @@ public class CommandListener  implements IListener<MessageReceivedEvent> {
 
 	@Override
 	public void handle(MessageReceivedEvent event) {
-		if (event.getAuthor().getLongID() != 84766711735136256L) return;
-
 		String content = event.getMessage().getContent();
 		if (content.startsWith(prefix)) {
 			String prefixRemoved = content.substring(prefix.length());
