@@ -5,22 +5,28 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 public class CommandListener  implements IListener<MessageReceivedEvent> {
 
-	private final String prefix;
 	private final CommandRegistry registry;
 
-	public CommandListener(String prefix, CommandRegistry registry) {
-		this.prefix = prefix;
+	public CommandListener(CommandRegistry registry) {
 		this.registry = registry;
 	}
 
 	@Override
 	public void handle(MessageReceivedEvent event) {
 		String content = event.getMessage().getContent();
+		String prefix = registry.getEffectivePrefix(event.getGuild().getLongID());
+
 		if (content.startsWith(prefix)) {
 			String prefixRemoved = content.substring(prefix.length());
-			String name = prefixRemoved.substring(0, prefixRemoved.indexOf(" "));
+			if (prefixRemoved.isEmpty()) return; // message was just the prefix.
 
-			registry.call(name, new CommandContext(event, prefix, name, prefixRemoved.substring(name.length() + 1)));
+			int spaceIndex = prefixRemoved.indexOf(" ");
+			int subIndex = spaceIndex == -1 ? prefixRemoved.length() : spaceIndex;
+			String name = prefixRemoved.substring(0, subIndex);
+
+			String args = name.length() == prefixRemoved.length() ? "" : prefixRemoved.substring(name.length() + 1);
+
+			registry.call(name, new CommandContext(event, prefix, name, args));
 		}
 	}
 }
