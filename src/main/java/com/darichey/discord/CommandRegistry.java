@@ -49,7 +49,15 @@ public class CommandRegistry {
 		});
 	}
 
-	public void register(String name, Command command) {
+	public void register(Command command, String name, String... aliases) {
+		register(command, name);
+		for (String alias : aliases) {
+			register(command, alias);
+		}
+	}
+
+	private void register(Command command, String name) {
+		if (commands.containsKey(name)) throw new IllegalArgumentException("Attempt to register two commands with the same name: " + name);
 		commands.put(name, command);
 	}
 
