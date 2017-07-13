@@ -3,6 +3,10 @@ package com.darichey.discord;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
+/**
+ * Listens for messages which start with the prefix specified by a {@link CommandRegistry} and attempts to parse and call the correct command.
+ */
+@SuppressWarnings("WeakerAccess")
 public class CommandListener  implements IListener<MessageReceivedEvent> {
 
 	private final CommandRegistry registry;
@@ -26,7 +30,7 @@ public class CommandListener  implements IListener<MessageReceivedEvent> {
 
 			String args = name.length() == prefixRemoved.length() ? "" : prefixRemoved.substring(name.length() + 1);
 
-			registry.call(name, new CommandContext(event, prefix, name, args));
+			registry.call(name, new CommandContext(event, name, args));
 		}
 	}
 }

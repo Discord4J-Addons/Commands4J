@@ -7,6 +7,9 @@ import sx.blah.discord.handle.obj.IRole;
 
 import java.util.Arrays;
 
+/**
+ * Limits execution of a command to a user with <b>ALL</b> of the given roles.
+ */
 public class RoleLimiter implements Limiter {
 
 	private final long[] ids;

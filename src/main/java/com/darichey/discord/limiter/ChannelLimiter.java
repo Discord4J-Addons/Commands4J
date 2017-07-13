@@ -3,6 +3,9 @@ package com.darichey.discord.limiter;
 import com.darichey.discord.CommandContext;
 import sx.blah.discord.handle.obj.IChannel;
 
+/**
+ * Limits execution of a command to a set of channels.
+ */
 public class ChannelLimiter extends IDLimiter {
 
 	public ChannelLimiter(IChannel... channels) {
