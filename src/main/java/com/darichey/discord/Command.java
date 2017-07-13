@@ -2,17 +2,17 @@ package com.darichey.discord;
 
 import com.darichey.discord.limiter.Limiter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 
 @SuppressWarnings("WeakerAccess")
 public class Command {
 
 	private final Consumer<CommandContext> onCalled;
-	private final List<Limiter> limiters;
+	private final Set<Limiter> limiters;
 
-	private Command(Consumer<CommandContext> onCalled, List<Limiter> limiters) {
+	private Command(Consumer<CommandContext> onCalled, Set<Limiter> limiters) {
 		this.onCalled = onCalled;
 		this.limiters = limiters;
 	}
@@ -21,7 +21,7 @@ public class Command {
 		return onCalled;
 	}
 
-	public List<Limiter> getLimiters() {
+	public Set<Limiter> getLimiters() {
 		return limiters;
 	}
 
@@ -32,7 +32,7 @@ public class Command {
 	public static class Builder {
 
 		private Consumer<CommandContext> onCalled;
-		private final List<Limiter> limiters = new ArrayList<>();
+		private Set<Limiter> limiters = new HashSet<>();
 
 		public Builder onCalled(Consumer<CommandContext> onCalled) {
 			this.onCalled = onCalled;
@@ -41,6 +41,11 @@ public class Command {
 
 		public Builder limiter(Limiter limiter) {
 			this.limiters.add(limiter);
+			return this;
+		}
+
+		public Builder limiters(Set<Limiter> limiters) {
+			this.limiters = limiters;
 			return this;
 		}
 
