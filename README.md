@@ -23,5 +23,13 @@ Command ping = Command.builder()
 ```
 The `CommandContext` object gives access to information about the context in which the command was executed such as the channel and arguments.
 
+Then, the command must be registered with a `CommandRegistry` which is the main way to configure and interact with Commands4J. After the commands are added, simply register a `CommandListener` configured with the registry with Discord4J.
+```java
+IDiscordClient client = ... // obtained from Discord4J
+CommandRegistry registry = new CommandRegistry("!");
+registry.register(ping, "ping");
+client.getDispatcher().registerListener(new CommandListener(registry));
+```
+
 ## Limiters
 Commands4J uses the concept of "limiters" to limit the scope in which a command can be executed. A limiter is simply a function which takes a `CommandContext` and returns whether the command can execute. Commands4J provides many default implementations of `Limiter`, but it is easy to define your own.
