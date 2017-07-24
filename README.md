@@ -1,43 +1,27 @@
-#Commands4J [![](https://jitpack.io/v/Discord4J-Addons/Commands4J.svg)](https://jitpack.io/#Discord4J-Addons/Commands4J)
-Commands4J is an easy-to-use functional command framework for [Discord4J](http://github.com/austinv11/Discord4J).
+# Commands4J
+An API for making chat commands with Discord4J
 
-##Adding Commands4J as a dependency
-###With Maven:
-```xml
-<repository>
-	<id>jitpack.io</id>
-	<url>https://jitpack.io</url>
-</repository>
-
-<dependency>
-	<groupId>com.github.Discord4J-Addons</groupId>
-	<artifactId>Commands4J</artifactId>
-	<version>1.0.2</version>
-</dependency>
-```
-
-###With Gradle:
+## Adding Commands4J as a Dependency
 ```groovy
-maven { url 'https://jitpack.io' }
+repositories {
+  maven { url 'https://jitpack.io' }
+}
 
-compile 'com.github.Discord4J-Addons:Commands4J:1.0.2'
+dependencies {
+  compile 'com.github.Discord4J-Addons:Commands4J:VERSION'
+}
 ```
 
-##Using Commands4J
-Creating commands with C4J is extremely simple. At the very least, a command needs a name and a function to execute when
-the command is called. For example, this is a simple "ping" command:
+## Using Commands4J
+Commands4J uses the builder pattern to construct Commands. Here is an example of a simple "ping" commnad:
 ```java
-Command ping = new Command("ping")
-		.withDescription("Ping -> Pong!")
-		.onExecuted(context ->
-			context.getMessage().getChannel().sendMessage("Pong!");
-		);
-
-IDiscordClient client = ...; // Client gotten from Discord4J
-CommandRegistry.getForClient(client).register(ping);
+Command ping = Command.builder()
+    .onCalled(ctx -> {
+      ctx.getChannel().sendMessage("Pong!");
+    })
+    .build();
 ```
-The command class also has other chaining methods to add aliases, set auto-delete, require permissions, and more!
+The `CommandContext` object gives access to information about the context in which the command was executed such as the channel and arguments.
 
-##Additional Info
-You can contact me on the [Official Discord4J Server](https://discord.gg/NxGAeCY) for help with this API.
-
+## Limiters
+Commands4J uses the concept of "limiters" to limit the scope in which a command can be executed. A limiter is simply a function which takes a `CommandContext` and returns whether the command can execute. Commands4J provides many default implementations of `Limiter`, but it is easy to define your own.

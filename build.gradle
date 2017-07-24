@@ -1,0 +1,15 @@
+group 'com.darichey.discord'
+version '2.0'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'com.github.austinv11:Discord4J:2.8.4'
+}
+
