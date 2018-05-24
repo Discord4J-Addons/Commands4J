@@ -125,16 +125,17 @@ public class CommandRegistry {
 	/**
 	 * Gets the prefix for the given guild. This is either the guild-specific prefix or the default prefix if one is not set.
 	 * @param guild The guild to look up.
-	 * @return The guild-specific prefix for this guild or
+	 * @return The guild-specific prefix for this guild or the default prefix.
 	 */
 	public String getEffectivePrefix(IGuild guild) {
-		return getEffectivePrefix(guild.getLongID());
+		if (guild == null) return defaultPrefix;
+		else return getEffectivePrefix(guild.getLongID());
 	}
 
 	/**
 	 * Gets the prefix for the given guild. This is either the guild-specific prefix or the default prefix if one is not set.
 	 * @param id The id of the guild to look up.
-	 * @return The guild-specific prefix for this guild or
+	 * @return The guild-specific prefix for this guild or the default prefix.
 	 */
 	public String getEffectivePrefix(long id) {
 		return getPrefixForGuild(id).orElse(defaultPrefix);

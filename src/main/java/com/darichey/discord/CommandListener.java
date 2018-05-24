@@ -18,7 +18,7 @@ public class CommandListener  implements IListener<MessageReceivedEvent> {
 	@Override
 	public void handle(MessageReceivedEvent event) {
 		String content = event.getMessage().getContent();
-		String prefix = registry.getEffectivePrefix(event.getGuild().getLongID());
+		String prefix = registry.getEffectivePrefix(event.getGuild());
 
 		if (content.startsWith(prefix)) {
 			String prefixRemoved = content.substring(prefix.length());
