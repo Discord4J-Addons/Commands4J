@@ -1,3 +1,8 @@
+# This library is DEFUNCT
+Use [Discord4J v3](https://discord4j.com) instead!
+
+This library was created for Discord4J v2 which is no longer supported or maintained. 
+
 # Commands4J
 An API for making chat commands with Discord4J
 
